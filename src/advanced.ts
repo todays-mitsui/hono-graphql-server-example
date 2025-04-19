@@ -8,7 +8,7 @@ import * as resolvers from "./graphql/resolvers.js";
 
 export const app = new Hono();
 
-const typeDefs = loadSchemaSync("./src/schema.graphql", {
+const typeDefs = loadSchemaSync("./schema.graphql", {
 	loaders: [new GraphQLFileLoader()],
 });
 
