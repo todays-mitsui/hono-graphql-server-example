@@ -1,9 +1,9 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { graphqlServer } from "@hono/graphql-server";
+import { buildSchema } from "graphql";
 import { Hono } from "hono";
+import schemaSDL from "../schema.graphql";
 import * as resolvers from "./graphql/resolvers.js";
-import { buildSchema } from 'graphql';
-import schemaSDL from '../schema.graphql';
 
 const schema = makeExecutableSchema({
 	typeDefs: buildSchema(schemaSDL),
