@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "run-p -c dev:*",
     "dev:basic": "tsx watch src/basic.ts",
-    "dev:advanced": "tsx watch src/advanced.ts",
+    "dev:advanced": "wrangler dev src/advanced.ts",
     "fmt": "npx @biomejs/biome format --write ./src",
     "check": "npx @biomejs/biome check --write ./src"
   },
@@ -20,6 +20,7 @@
   "devDependencies": {
     "@types/node": "^20.11.17",
     "npm-run-all2": "^7.0.2",
-    "tsx": "^4.7.1"
+    "tsx": "^4.7.1",
+    "wrangler": "^4.12.0"
   }
 }

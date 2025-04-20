@@ -1,21 +1,16 @@
-import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
-import { loadSchemaSync } from "@graphql-tools/load";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { graphqlServer } from "@hono/graphql-server";
-import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import * as resolvers from "./graphql/resolvers.js";
-
-export const app = new Hono();
-
-const typeDefs = loadSchemaSync("./schema.graphql", {
-	loaders: [new GraphQLFileLoader()],
-});
+import { buildSchema } from 'graphql';
+import schemaSDL from '../schema.graphql';
 
 const schema = makeExecutableSchema({
-	typeDefs,
+	typeDefs: buildSchema(schemaSDL),
 	resolvers,
 });
+
+const app = new Hono();
 
 app.use(
 	"/graphql",
@@ -25,14 +20,4 @@ app.use(
 	}),
 );
 
-serve(
-	{
-		fetch: app.fetch,
-		port: 3300,
-	},
-	(info) => {
-		console.log(
-			`Advanced Example: Running on http://localhost:${info.port}/graphql`,
-		);
-	},
-);
+export default app;
