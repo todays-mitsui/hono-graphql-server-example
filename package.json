@@ -2,9 +2,9 @@
   "name": "hono-graphql-server-example",
   "type": "module",
   "scripts": {
-    "dev": "run-p -c dev:*",
     "dev:basic": "wrangler dev --port=3000 src/basic.ts",
     "dev:advanced": "wrangler dev --port=3000 src/advanced.ts",
+    "deploy:advanced": "wrangler deploy --name hono-graphql-server-example src/advanced.ts",
     "fmt": "npx @biomejs/biome format --write ./src",
     "check": "npx @biomejs/biome check --write ./src"
   },

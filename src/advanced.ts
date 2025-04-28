@@ -12,6 +12,8 @@ const schema = makeExecutableSchema({
 
 const app = new Hono();
 
+app.get("/", (c) => c.redirect("/graphql"));
+
 app.use(
 	"/graphql",
 	graphqlServer({
