@@ -1,10 +1,7 @@
 import { type RootResolver, graphqlServer } from "@hono/graphql-server";
-import { serve } from "@hono/node-server";
 import { buildSchema } from "graphql";
 import { Hono } from "hono";
 import { authors, books } from "./graphql/data.js";
-
-export const app = new Hono();
 
 const typeDefs = buildSchema(`
 type Author {
@@ -50,6 +47,10 @@ const rootResolver: RootResolver = (c) => {
 	};
 };
 
+const app = new Hono();
+
+app.get("/", (c) => c.redirect("/graphql"));
+
 app.use(
 	"/graphql",
 	graphqlServer({
@@ -59,14 +60,4 @@ app.use(
 	}),
 );
 
-serve(
-	{
-		fetch: app.fetch,
-		port: 3000,
-	},
-	(info) => {
-		console.log(
-			`Basic Example: Running on http://localhost:${info.port}/graphql`,
-		);
-	},
-);
+export default app;
