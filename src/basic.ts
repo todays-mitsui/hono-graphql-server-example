@@ -1,7 +1,7 @@
-import { type RootResolver, graphqlServer } from "@hono/graphql-server";
-import { buildSchema } from "graphql";
-import { Hono } from "hono";
-import { authors, books } from "./graphql/data.js";
+import { type RootResolver, graphqlServer } from '@hono/graphql-server';
+import { buildSchema } from 'graphql';
+import { Hono } from 'hono';
+import { authors, books } from './graphql/data.js';
 
 const typeDefs = buildSchema(`
 type Author {
@@ -26,38 +26,38 @@ type Query {
 `);
 
 const rootResolver: RootResolver = (c) => {
-	return {
-		hello: ({ name = "Hono" }: { name: string }) => `Hello, ${name}!`,
+  return {
+    hello: ({ name = 'Hono' }: { name: string }) => `Hello, ${name}!`,
 
-		book: ({ title }: { title: string }) => {
-			const book = books.find((book) => book.title === title);
-			if (!book) return null;
-			return {
-				...book,
-				author: authors.find((author) => author.id === book.authorId) ?? null,
-			};
-		},
+    book: ({ title }: { title: string }) => {
+      const book = books.find((book) => book.title === title);
+      if (!book) return null;
+      return {
+        ...book,
+        author: authors.find((author) => author.id === book.authorId) ?? null,
+      };
+    },
 
-		books: () => {
-			return books.map((book) => ({
-				...book,
-				author: authors.find((author) => author.id === book.authorId) ?? null,
-			}));
-		},
-	};
+    books: () => {
+      return books.map((book) => ({
+        ...book,
+        author: authors.find((author) => author.id === book.authorId) ?? null,
+      }));
+    },
+  };
 };
 
 const app = new Hono();
 
-app.get("/", (c) => c.redirect("/graphql"));
+app.get('/', (c) => c.redirect('/graphql'));
 
 app.use(
-	"/graphql",
-	graphqlServer({
-		schema: typeDefs,
-		rootResolver,
-		graphiql: true,
-	}),
+  '/graphql',
+  graphqlServer({
+    schema: typeDefs,
+    rootResolver,
+    graphiql: true,
+  }),
 );
 
 export default app;
