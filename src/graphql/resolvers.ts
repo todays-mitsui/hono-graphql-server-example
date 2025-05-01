@@ -1,7 +1,7 @@
 import { authors, books } from './data.js';
 import type { Author, Book } from './types.js';
 
-export const Query = {
+const RootResolvers = {
   hello(_parent: unknown, { name = 'Hono' }: { name: string }): string {
     return `Hello, ${name}!`;
   },
@@ -14,16 +14,17 @@ export const Query = {
     return books;
   },
 };
+export { RootResolvers as Query };
 
-const BookFields = {
+const BookResolvers = {
   author(book: Book): Author | null {
     if (book.authorId == null) return null;
     return authors.find((author) => author.id === book.authorId) ?? null;
   },
 };
-export { BookFields as Book };
+export { BookResolvers as Book };
 
-const AuthorFields = {
+const AuthorResolvers = {
   name(author: Author): string {
     return `${author.lastName}${author.firstName}`;
   },
@@ -33,4 +34,4 @@ const AuthorFields = {
     return findTitle ? filtered.filter((post) => post.title.includes(findTitle)) : filtered;
   },
 };
-export { AuthorFields as Author };
+export { AuthorResolvers as Author };
